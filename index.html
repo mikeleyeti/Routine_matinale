@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#f5efe6">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Routine Matinale</title>
+<link rel="manifest" href="manifest.json">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  :root {
+    --bg: #f5efe6; --surface: #fff; --ink: #2d2a26; --muted: #7a7268;
+    --accent: #c97b4a; --accent-soft: #f0d8c5; --sage: #8aa68a;
+    --shadow: 0 1px 3px rgba(45,42,38,.06), 0 8px 24px rgba(45,42,38,.08);
+  }
+  html, body { height: 100%; overscroll-behavior: none; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    background: var(--bg); color: var(--ink);
+    display: flex; flex-direction: column; min-height: 100dvh;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    user-select: none; -webkit-user-select: none;
+  }
+  .app { flex: 1; display: flex; flex-direction: column; max-width: 600px; width: 100%; margin: 0 auto; padding: 20px; }
+  .screen { display: none; flex: 1; flex-direction: column; }
+  .screen.active { display: flex; animation: fade .3s ease; }
+  @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  .welcome { justify-content: center; text-align: center; gap: 24px; }
+  .welcome h1 { font-size: 32px; font-weight: 600; letter-spacing: -.02em; }
+  .welcome .subtitle { color: var(--muted); font-size: 16px; line-height: 1.5; max-width: 320px; margin: 0 auto; }
+  .sun { width: 96px; height: 96px; margin: 0 auto 8px; }
+  .pill { display: inline-flex; align-items: center; gap: 8px; background: var(--surface);
+    padding: 8px 14px; border-radius: 100px; font-size: 14px; color: var(--muted); box-shadow: var(--shadow); margin: 0 auto; }
+  .pill::before { content: ""; width: 6px; height: 6px; background: var(--sage); border-radius: 50%; }
+  .start-btn { background: var(--accent); color: #fff; border: none; padding: 18px 32px;
+    border-radius: 100px; font-size: 17px; font-weight: 600; cursor: pointer;
+    box-shadow: 0 4px 14px rgba(201,123,74,.3); transition: transform .15s ease;
+    margin: 8px auto 0; min-width: 200px; }
+  .start-btn:active { transform: scale(.97); }
+  .exercise-list { background: var(--surface); border-radius: 16px; padding: 20px;
+    margin-top: 8px; box-shadow: var(--shadow); text-align: left; }
+  .exercise-list h3 { font-size: 13px; font-weight: 600; color: var(--muted);
+    text-transform: uppercase; letter-spacing: .08em; margin-bottom: 12px; }
+  .exercise-list ul { list-style: none; }
+  .exercise-list li { display: flex; justify-content: space-between; padding: 8px 0;
+    font-size: 14px; border-bottom: 1px solid rgba(45,42,38,.06); }
+  .exercise-list li:last-child { border-bottom: none; }
+  .exercise-list li span:last-child { color: var(--muted); font-variant-numeric: tabular-nums; }
+
+  .workout { justify-content: space-between; gap: 16px; }
+  .progress-wrap { display: flex; align-items: center; gap: 12px; }
+  .progress-track { flex: 1; height: 4px; background: rgba(45,42,38,.08); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width .3s ease; }
+  .progress-label { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; min-width: 36px; text-align: right; }
+  .exercise-card { flex: 1; background: var(--surface); border-radius: 24px; padding: 28px 24px;
+    display: flex; flex-direction: column; justify-content: center; text-align: center;
+    box-shadow: var(--shadow); gap: 16px; }
+  .exercise-num { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; }
+  .exercise-name { font-size: 26px; font-weight: 600; line-height: 1.2; letter-spacing: -.01em; }
+  .exercise-instruction { color: var(--muted); font-size: 15px; line-height: 1.5; max-width: 360px; margin: 0 auto; }
+  .timer-circle { position: relative; width: 200px; height: 200px; margin: 8px auto; }
+  .timer-circle svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .timer-circle .bg-ring { fill: none; stroke: var(--accent-soft); stroke-width: 6; }
+  .timer-circle .progress-ring { fill: none; stroke: var(--accent); stroke-width: 6;
+    stroke-linecap: round; transition: stroke-dashoffset 1s linear; }
+  .timer-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    font-size: 48px; font-weight: 300; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+  .controls { display: flex; justify-content: center; gap: 12px; padding-bottom: 8px; }
+  .ctrl-btn { background: var(--surface); border: none; width: 56px; height: 56px;
+    border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    box-shadow: var(--shadow); color: var(--ink); transition: transform .15s ease; }
+  .ctrl-btn:active { transform: scale(.92); }
+  .ctrl-btn.primary { background: var(--accent); color: #fff; width: 72px; height: 72px; }
+  .ctrl-btn svg { width: 24px; height: 24px; }
+  .ctrl-btn.primary svg { width: 28px; height: 28px; }
+
+  .done { justify-content: center; text-align: center; gap: 20px; }
+  .checkmark { width: 96px; height: 96px; margin: 0 auto; background: var(--sage);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    color: #fff; animation: pop .5s cubic-bezier(.34,1.56,.64,1); }
+  @keyframes pop { 0% { transform: scale(0); } 100% { transform: scale(1); } }
+  .done h1 { font-size: 32px; font-weight: 600; letter-spacing: -.02em; }
+  .done p { color: var(--muted); font-size: 16px; max-width: 320px; margin: 0 auto; }
+  .stats { display: flex; gap: 12px; justify-content: center; margin-top: 8px; }
+  .stat-card { background: var(--surface); padding: 16px 20px; border-radius: 16px; box-shadow: var(--shadow); min-width: 100px; }
+  .stat-value { font-size: 24px; font-weight: 600; color: var(--accent); }
+  .stat-label { font-size: 12px; color: var(--muted); margin-top: 2px; }
+</style>
+</head>
+<body>
+<div class="app">
+  <section id="welcome" class="screen welcome active">
+    <div>
+      <svg class="sun" viewBox="0 0 96 96" fill="none">
+        <circle cx="48" cy="48" r="20" fill="#c97b4a"/>
+        <g stroke="#c97b4a" stroke-width="3" stroke-linecap="round">
+          <line x1="48" y1="8" x2="48" y2="18"/><line x1="48" y1="78" x2="48" y2="88"/>
+          <line x1="8" y1="48" x2="18" y2="48"/><line x1="78" y1="48" x2="88" y2="48"/>
+          <line x1="20" y1="20" x2="27" y2="27"/><line x1="69" y1="69" x2="76" y2="76"/>
+          <line x1="20" y1="76" x2="27" y2="69"/><line x1="69" y1="27" x2="76" y2="20"/>
+        </g>
+      </svg>
+      <div class="pill">10 minutes &middot; sciatique &amp; abdos</div>
+    </div>
+    <div>
+      <h1>Routine matinale</h1>
+      <p class="subtitle">9 exercices doux pour soulager le nerf sciatique et renforcer les abdos profonds.</p>
+    </div>
+    <div class="exercise-list">
+      <h3>Programme</h3>
+      <ul id="program-list"></ul>
+    </div>
+    <button class="start-btn" id="start-btn">Commencer</button>
+  </section>
+
+  <section id="workout" class="screen workout">
+    <div class="progress-wrap">
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+      <div class="progress-label" id="progress-label">1/9</div>
+    </div>
+    <div class="exercise-card">
+      <div class="exercise-num" id="ex-num">Étape 1</div>
+      <div class="exercise-name" id="ex-name">—</div>
+      <div class="timer-circle">
+        <svg viewBox="0 0 200 200">
+          <circle class="bg-ring" cx="100" cy="100" r="92"/>
+          <circle class="progress-ring" id="ring" cx="100" cy="100" r="92" stroke-dasharray="578" stroke-dashoffset="0"/>
+        </svg>
+        <div class="timer-text" id="timer">0:00</div>
+      </div>
+      <div class="exercise-instruction" id="ex-instruction">—</div>
+    </div>
+    <div class="controls">
+      <button class="ctrl-btn" id="prev-btn" aria-label="Précédent"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zM9.5 12l8.5 6V6z"/></svg></button>
+      <button class="ctrl-btn primary" id="pause-btn" aria-label="Pause"><svg id="pause-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg></button>
+      <button class="ctrl-btn" id="next-btn" aria-label="Suivant"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/></svg></button>
+    </div>
+  </section>
+
+  <section id="done" class="screen done">
+    <div class="checkmark"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 8"/></svg></div>
+    <div><h1>Bravo !</h1><p>Tu as terminé ta routine. Bonne journée &mdash; ton dos te remerciera.</p></div>
+    <div class="stats">
+      <div class="stat-card"><div class="stat-value">10</div><div class="stat-label">Minutes</div></div>
+      <div class="stat-card"><div class="stat-value">9</div><div class="stat-label">Exercices</div></div>
+    </div>
+    <button class="start-btn" id="restart-btn">Recommencer</button>
+  </section>
+</div>
+
+<script>
+const EXERCISES = [
+  { name: "Chat / Vache", duration: 60, instruction: "À quatre pattes : alterne dos rond (expire) et dos creux (inspire). Mobilise toute la colonne en douceur." },
+  { name: "Genou-poitrine — gauche", duration: 30, instruction: "Allongé sur le dos, ramène le genou gauche vers la poitrine." },
+  { name: "Genou-poitrine — droite", duration: 30, instruction: "Même exercice avec la jambe droite." },
+  { name: "Piriforme « figure 4 » — gauche", duration: 60, instruction: "Sur le dos, cheville gauche sur genou droit. Tire la cuisse droite vers toi." },
+  { name: "Piriforme « figure 4 » — droite", duration: 60, instruction: "Inverse les jambes : cheville droite sur genou gauche." },
+  { name: "Bascules du bassin", duration: 60, instruction: "Sur le dos, genoux pliés. Plaque le bas du dos contre le sol en contractant les abdos." },
+  { name: "Dead bug", duration: 120, instruction: "Sur le dos, bras vers le plafond, genoux à 90°. Tends bras gauche + jambe droite, sans cambrer. Alterne." },
+  { name: "Bird dog", duration: 120, instruction: "À quatre pattes : tends bras droit + jambe gauche, maintiens 2-3 s, alterne." },
+  { name: "Posture de l'enfant", duration: 60, instruction: "À genoux, fesses sur les talons, bras tendus devant, front au sol." }
+];
+
+const $ = id => document.getElementById(id);
+const screens = { welcome: $("welcome"), workout: $("workout"), done: $("done") };
+const ring = $("ring");
+const RING_CIRC = 2 * Math.PI * 92;
+
+let idx = 0, remaining = 0, intervalId = null, paused = false, wakeLock = null, audioCtx = null;
+
+function beep(freq = 440, duration = 0.15) {
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+    osc.frequency.value = freq; osc.type = "sine";
+    gain.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.2, audioCtx.currentTime + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+    osc.connect(gain).connect(audioCtx.destination);
+    osc.start(); osc.stop(audioCtx.currentTime + duration);
+  } catch (e) {}
+}
+
+async function requestWakeLock() {
+  try { if ("wakeLock" in navigator) wakeLock = await navigator.wakeLock.request("screen"); } catch (e) {}
+}
+function releaseWakeLock() { if (wakeLock) { wakeLock.release(); wakeLock = null; } }
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible" && screens.workout.classList.contains("active")) requestWakeLock();
+});
+
+function renderProgram() {
+  $("program-list").innerHTML = EXERCISES.map(e => {
+    const m = Math.floor(e.duration / 60), s = e.duration % 60;
+    const t = m > 0 ? `${m} min${s ? ` ${s}s` : ""}` : `${s} s`;
+    return `<li><span>${e.name}</span><span>${t}</span></li>`;
+  }).join("");
+}
+
+function showScreen(name) {
+  Object.values(screens).forEach(s => s.classList.remove("active"));
+  screens[name].classList.add("active");
+}
+
+function loadExercise(i) {
+  const ex = EXERCISES[i];
+  $("ex-num").textContent = `Étape ${i + 1} sur ${EXERCISES.length}`;
+  $("ex-name").textContent = ex.name;
+  $("ex-instruction").textContent = ex.instruction;
+  $("progress-label").textContent = `${i + 1}/${EXERCISES.length}`;
+  $("progress-fill").style.width = `${(i / EXERCISES.length) * 100}%`;
+  remaining = ex.duration;
+  updateTimerDisplay();
+  updateRing(1);
+}
+function updateTimerDisplay() {
+  const m = Math.floor(remaining / 60), s = remaining % 60;
+  $("timer").textContent = `${m}:${String(s).padStart(2, "0")}`;
+}
+function updateRing(progress) {
+  ring.style.strokeDasharray = RING_CIRC;
+  ring.style.strokeDashoffset = RING_CIRC * (1 - progress);
+}
+
+function startTimer() {
+  clearInterval(intervalId);
+  const total = EXERCISES[idx].duration;
+  intervalId = setInterval(() => {
+    if (paused) return;
+    remaining--;
+    updateTimerDisplay();
+    updateRing(remaining / total);
+    if (remaining <= 3 && remaining > 0) beep(660, 0.08);
+    if (remaining <= 0) { clearInterval(intervalId); beep(880, 0.25); next(); }
+  }, 1000);
+}
+
+function next() {
+  if (idx < EXERCISES.length - 1) { idx++; loadExercise(idx); startTimer(); }
+  else finish();
+}
+function prev() {
+  if (idx > 0) idx--;
+  loadExercise(idx); startTimer();
+}
+function togglePause() {
+  paused = !paused;
+  $("pause-icon").innerHTML = paused
+    ? '<path d="M8 5v14l11-7z"/>'
+    : '<path d="M6 4h4v16H6zM14 4h4v16h-4z"/>';
+}
+
+function finish() {
+  clearInterval(intervalId); releaseWakeLock();
+  beep(523, 0.15);
+  setTimeout(() => beep(659, 0.15), 150);
+  setTimeout(() => beep(784, 0.3), 300);
+  $("progress-fill").style.width = "100%";
+  showScreen("done");
+}
+
+function start() {
+  idx = 0; paused = false;
+  $("pause-icon").innerHTML = '<path d="M6 4h4v16H6zM14 4h4v16h-4z"/>';
+  loadExercise(0); showScreen("workout");
+  requestWakeLock(); beep(659, 0.15); startTimer();
+}
+
+$("start-btn").addEventListener("click", start);
+$("restart-btn").addEventListener("click", start);
+$("next-btn").addEventListener("click", next);
+$("prev-btn").addEventListener("click", prev);
+$("pause-btn").addEventListener("click", togglePause);
+
+renderProgram();
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+}
+</script>
+</body>
+</html>
