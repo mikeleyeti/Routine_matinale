@@ -152,16 +152,62 @@
 </div>
 
 <script>
-const EXERCISES = [
-  { name: "Chat / Vache", duration: 60, instruction: "À quatre pattes : alterne dos rond (expire) et dos creux (inspire). Mobilise toute la colonne en douceur." },
-  { name: "Genou-poitrine — gauche", duration: 30, instruction: "Allongé sur le dos, ramène le genou gauche vers la poitrine." },
-  { name: "Genou-poitrine — droite", duration: 30, instruction: "Même exercice avec la jambe droite." },
-  { name: "Piriforme « figure 4 » — gauche", duration: 60, instruction: "Sur le dos, cheville gauche sur genou droit. Tire la cuisse droite vers toi." },
-  { name: "Piriforme « figure 4 » — droite", duration: 60, instruction: "Inverse les jambes : cheville droite sur genou gauche." },
-  { name: "Bascules du bassin", duration: 60, instruction: "Sur le dos, genoux pliés. Plaque le bas du dos contre le sol en contractant les abdos." },
-  { name: "Dead bug", duration: 120, instruction: "Sur le dos, bras vers le plafond, genoux à 90°. Tends bras gauche + jambe droite, sans cambrer. Alterne." },
-  { name: "Bird dog", duration: 120, instruction: "À quatre pattes : tends bras droit + jambe gauche, maintiens 2-3 s, alterne." },
-  { name: "Posture de l'enfant", duration: 60, instruction: "À genoux, fesses sur les talons, bras tendus devant, front au sol." }
+  const EXERCISES = [
+  {
+    name: "Décompression lombaire",
+    duration: 45,
+    instruction: "Sur le dos, ramène les deux genoux vers la poitrine, mains sur les tibias. Berce doucement d'avant en arrière et de gauche à droite. Respiration lente. Décompresse la colonne, ouvre la séance en douceur."
+  },
+  {
+    name: "Bascules du bassin",
+    duration: 45,
+    instruction: "Sur le dos, genoux pliés, pieds au sol. Alterne : bas du dos plaqué contre le sol en rentrant le ventre (rétroversion), puis position neutre. C'est le geste clé pour toute la suite — apprends-le bien."
+  },
+  {
+    name: "Étirement piriforme — droit",
+    duration: 60,
+    instruction: "Sur le dos, cheville DROITE sur genou gauche. Attrape la cuisse gauche et tire vers toi. Étire la fesse droite — zone très souvent impliquée dans la sciatique. Respiration lente, ne force pas si ça descend dans la jambe."
+  },
+  {
+    name: "Étirement piriforme — gauche",
+    duration: 45,
+    instruction: "Inverse : cheville GAUCHE sur genou droit. Étire la fesse gauche, pour l'équilibre."
+  },
+  {
+    name: "Étirement psoas — droit",
+    duration: 60,
+    instruction: "Fente : genou DROIT au sol, pied gauche devant. Rentre le ventre, bassin en rétroversion, puis pousse doucement le bassin vers l'avant. Tirer devant la cuisse / aine DROITE. AUCUNE cambrure du bas du dos."
+  },
+  {
+    name: "Étirement psoas — gauche",
+    duration: 45,
+    instruction: "Inverse : genou gauche au sol, pied droit devant. Même consigne — ventre rentré, bassin en rétroversion, pousse vers l'avant."
+  },
+  {
+    name: "Étirement ischio-jambiers",
+    duration: 60,
+    instruction: "Sur le dos, une jambe tendue vers le plafond, sangle ou serviette autour du pied, tire doucement vers toi jambe tendue. 30 s par jambe. Si ça tire dans la fesse ou descend dans la jambe → réduis l'amplitude. Les ischios raides tirent sur le bassin et aggravent la sciatique."
+  },
+  {
+    name: "Pont fessier",
+    duration: 60,
+    instruction: "Sur le dos, genoux pliés. Monte le bassin en SERRANT FORT les fessiers, sans cambrer, tient 2 s en haut, descends lentement. Vise 12-15 répétitions. Des fessiers forts = protection majeure du dos et de la sciatique."
+  },
+  {
+    name: "Dead bug",
+    duration: 60,
+    instruction: "Sur le dos, bras vers le plafond, genoux à 90°. Tends bras gauche + jambe droite lentement, SANS laisser le dos décoller du sol. Alterne. Renforce les abdos profonds sans solliciter le psoas ni comprimer les disques."
+  },
+  {
+    name: "Bird dog",
+    duration: 75,
+    instruction: "À quatre pattes : tends bras droit + jambe gauche à l'horizontale, maintiens 2-3 s, alterne. Bassin stable, dos neutre, ventre engagé. Renforce les multifides qui stabilisent chaque vertèbre — essentiels contre la sciatique."
+  },
+  {
+    name: "Posture de l'enfant",
+    duration: 45,
+    instruction: "À genoux, fesses sur les talons, buste vers l'avant, bras tendus au sol devant toi. Respire dans le dos. Décompresse la colonne, relâche les lombaires. Clôt la séance en douceur."
+  }
 ];
 
 const $ = id => document.getElementById(id);
