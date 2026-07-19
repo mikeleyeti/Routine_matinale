@@ -30,7 +30,7 @@
 
   .welcome { justify-content: center; text-align: center; gap: 24px; }
   .welcome h1 { font-size: 32px; font-weight: 600; letter-spacing: -.02em; }
-  .welcome .subtitle { color: var(--muted); font-size: 16px; line-height: 1.5; max-width: 320px; margin: 0 auto; }
+  .welcome .subtitle { color: var(--muted); font-size: 16px; line-height: 1.5; max-width: 340px; margin: 0 auto; }
   .sun { width: 96px; height: 96px; margin: 0 auto 8px; }
   .pill { display: inline-flex; align-items: center; gap: 8px; background: var(--surface);
     padding: 8px 14px; border-radius: 100px; font-size: 14px; color: var(--muted); box-shadow: var(--shadow); margin: 0 auto; }
@@ -55,19 +55,19 @@
   .progress-track { flex: 1; height: 4px; background: rgba(45,42,38,.08); border-radius: 2px; overflow: hidden; }
   .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width .3s ease; }
   .progress-label { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; min-width: 36px; text-align: right; }
-  .exercise-card { flex: 1; background: var(--surface); border-radius: 24px; padding: 28px 24px;
+  .exercise-card { flex: 1; background: var(--surface); border-radius: 24px; padding: 24px 22px;
     display: flex; flex-direction: column; justify-content: center; text-align: center;
-    box-shadow: var(--shadow); gap: 16px; }
+    box-shadow: var(--shadow); gap: 14px; }
   .exercise-num { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; }
-  .exercise-name { font-size: 26px; font-weight: 600; line-height: 1.2; letter-spacing: -.01em; }
-  .exercise-instruction { color: var(--muted); font-size: 15px; line-height: 1.5; max-width: 360px; margin: 0 auto; }
-  .timer-circle { position: relative; width: 200px; height: 200px; margin: 8px auto; }
+  .exercise-name { font-size: 24px; font-weight: 600; line-height: 1.2; letter-spacing: -.01em; }
+  .exercise-instruction { color: var(--muted); font-size: 14px; line-height: 1.5; max-width: 380px; margin: 0 auto; }
+  .timer-circle { position: relative; width: 180px; height: 180px; margin: 4px auto; }
   .timer-circle svg { width: 100%; height: 100%; transform: rotate(-90deg); }
   .timer-circle .bg-ring { fill: none; stroke: var(--accent-soft); stroke-width: 6; }
   .timer-circle .progress-ring { fill: none; stroke: var(--accent); stroke-width: 6;
     stroke-linecap: round; transition: stroke-dashoffset 1s linear; }
   .timer-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    font-size: 48px; font-weight: 300; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+    font-size: 44px; font-weight: 300; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
   .controls { display: flex; justify-content: center; gap: 12px; padding-bottom: 8px; }
   .ctrl-btn { background: var(--surface); border: none; width: 56px; height: 56px;
     border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;
@@ -83,11 +83,17 @@
     color: #fff; animation: pop .5s cubic-bezier(.34,1.56,.64,1); }
   @keyframes pop { 0% { transform: scale(0); } 100% { transform: scale(1); } }
   .done h1 { font-size: 32px; font-weight: 600; letter-spacing: -.02em; }
-  .done p { color: var(--muted); font-size: 16px; max-width: 320px; margin: 0 auto; }
+  .done p { color: var(--muted); font-size: 16px; max-width: 340px; margin: 0 auto; line-height: 1.5; }
   .stats { display: flex; gap: 12px; justify-content: center; margin-top: 8px; }
   .stat-card { background: var(--surface); padding: 16px 20px; border-radius: 16px; box-shadow: var(--shadow); min-width: 100px; }
   .stat-value { font-size: 24px; font-weight: 600; color: var(--accent); }
   .stat-label { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .tip {
+    background: var(--accent-soft); border-radius: 12px; padding: 12px 14px;
+    font-size: 13px; color: #6b4a32; line-height: 1.5; text-align: left;
+    margin: 4px auto 0; max-width: 380px;
+  }
+  .tip strong { color: #4a3322; }
 </style>
 </head>
 <body>
@@ -103,15 +109,18 @@
           <line x1="20" y1="76" x2="27" y2="69"/><line x1="69" y1="27" x2="76" y2="20"/>
         </g>
       </svg>
-      <div class="pill">10 minutes &middot; sciatique &amp; abdos</div>
+      <div class="pill">10 min &middot; psoas, fessiers &amp; abdos profonds</div>
     </div>
     <div>
       <h1>Routine matinale</h1>
-      <p class="subtitle">9 exercices doux pour soulager le nerf sciatique et renforcer les abdos profonds.</p>
+      <p class="subtitle">10 exercices pour relâcher le psoas (côté droit prioritaire), activer les fessiers et renforcer les abdos profonds — sans sollicitation des fléchisseurs de hanche.</p>
     </div>
     <div class="exercise-list">
       <h3>Programme</h3>
       <ul id="program-list"></ul>
+    </div>
+    <div class="tip">
+      <strong>Clé de la routine :</strong> sur les étirements du psoas et le pont fessier, garde le bassin en rétroversion (ventre rentré, bas du dos plaqué). C'est ce qui fait toute la différence — sans ça, tu cambres et l'étirement ne sert à rien.
     </div>
     <button class="start-btn" id="start-btn">Commencer</button>
   </section>
@@ -119,7 +128,7 @@
   <section id="workout" class="screen workout">
     <div class="progress-wrap">
       <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
-      <div class="progress-label" id="progress-label">1/9</div>
+      <div class="progress-label" id="progress-label">1/10</div>
     </div>
     <div class="exercise-card">
       <div class="exercise-num" id="ex-num">Étape 1</div>
@@ -142,10 +151,13 @@
 
   <section id="done" class="screen done">
     <div class="checkmark"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 8"/></svg></div>
-    <div><h1>Bravo !</h1><p>Tu as terminé ta routine. Bonne journée &mdash; ton dos te remerciera.</p></div>
+    <div>
+      <h1>Bravo !</h1>
+      <p>Pense à te lever toutes les 30–45 min au bureau et à marcher 20–30 min dans la journée — c'est le meilleur régulateur du psoas.</p>
+    </div>
     <div class="stats">
       <div class="stat-card"><div class="stat-value">10</div><div class="stat-label">Minutes</div></div>
-      <div class="stat-card"><div class="stat-value">9</div><div class="stat-label">Exercices</div></div>
+      <div class="stat-card"><div class="stat-value">10</div><div class="stat-label">Exercices</div></div>
     </div>
     <button class="start-btn" id="restart-btn">Recommencer</button>
   </section>

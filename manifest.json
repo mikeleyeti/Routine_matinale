@@ -1,7 +1,7 @@
 {
   "name": "Routine Matinale",
   "short_name": "Routine",
-  "description": "Routine de 10 minutes pour sciatique et abdos",
+  "description": "10 min — psoas, fessiers et abdos profonds",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
