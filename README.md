@@ -1,44 +1,54 @@
-# Routine Matinale — PWA (v2)
+# Routine Matinale — PWA (v4)
 
-Application web installable de routine matinale (10 min) ciblée sur la
+Application web installable de routine matinale (12 min) ciblée sur la
 tension du psoas (côté droit prioritaire), le renforcement des fessiers et
-des abdos profonds.
+le gainage des abdos profonds — adaptée sciatique.
 
-## Programme (10 exercices, 10 minutes)
+## Programme (13 exercices, 12 minutes)
 
-1. Chat / Vache (60 s) — mobilité colonne
-2. Bascules du bassin (60 s) — apprendre la rétroversion
-3. Étirement psoas droit en fente (45 s)
-4. Étirement psoas gauche en fente (45 s)
-5. Pont fessier (60 s)
-6. Dead bug (90 s)
-7. Bird dog (90 s)
-8. Étirement piriforme droit (45 s)
-9. Étirement piriforme gauche (45 s)
-10. Relâchement psoas bord de lit, côté droit (60 s)
+1. Décompression lombaire (45 s) — ouverture en douceur
+2. Bascules du bassin (45 s) — apprendre la rétroversion
+3. Étirement piriforme droit (60 s)
+4. Étirement piriforme gauche (45 s)
+5. Étirement psoas droit en fente (60 s)
+6. Étirement psoas gauche en fente (45 s)
+7. Étirement ischio-jambiers (60 s)
+8. Planche latérale droite puis gauche (60 s) — abdos / obliques
+9. Vacuum abdominal (60 s) — abdos / transverse
+10. Pont fessier (60 s)
+11. Gainage ventral, planche (60 s) — abdos / anti-cambrure
+12. Bird dog (75 s)
+13. Posture de l'enfant (45 s) — retour au calme
+
+Les trois exercices d'abdos (8, 9 et 11) sont choisis pour ne pas solliciter
+les fléchisseurs de hanche ni comprimer les disques : gainage isométrique,
+stabilité latérale et transverse profond, plutôt que crunchs.
 
 ## Principe clé
 
 Sur les étirements du psoas et le pont fessier : **bassin en rétroversion**
 (ventre rentré, bas du dos plaqué). Sans ça, on cambre et l'étirement ne
-travaille rien.
+travaille rien. Même consigne sur les gainages : aucune cambrure, aucun
+bassin qui tombe.
 
 ## Contenu du dossier
 
 - `index.html` — l'application complète
 - `manifest.json` — métadonnées PWA
-- `sw.js` — service worker (cache v2, mise à jour automatique sur les anciennes installations)
+- `sw.js` — service worker (cache v4, mise à jour automatique sur les anciennes installations)
 - `icon-192.png`, `icon-512.png` — icônes pour l'écran d'accueil
 
 ## Installation sur Android
 
-Voir le README de la v1, identique : héberger sur GitHub Pages ou Netlify
-Drop, puis ouvrir l'URL dans Chrome → menu ⋮ → "Installer l'application".
+Héberger sur GitHub Pages ou Netlify Drop, puis ouvrir l'URL dans Chrome →
+menu ⋮ → "Installer l'application".
 
-Si tu avais déjà installé la v1, le service worker détectera la v2 au
-prochain lancement avec connexion et mettra à jour automatiquement.
+Si une version précédente est déjà installée, le service worker détectera la
+nouvelle au prochain lancement avec connexion et mettra à jour
+automatiquement.
 
 ## Personnaliser
 
 Liste des exercices en haut du `<script>` dans `index.html`, constante
-`EXERCISES`.
+`EXERCISES`. Après modification, pense à incrémenter `CACHE` dans `sw.js`
+pour forcer la mise à jour des installations existantes.
