@@ -1,4 +1,4 @@
-# Routine Matinale — PWA (v4)
+# Routine Matinale — PWA (v5)
 
 Application web installable de routine matinale (12 min) ciblée sur la
 tension du psoas (côté droit prioritaire), le renforcement des fessiers et
@@ -14,7 +14,7 @@ le gainage des abdos profonds — adaptée sciatique.
 6. Étirement psoas gauche en fente (45 s)
 7. Étirement ischio-jambiers (60 s)
 8. Planche latérale droite puis gauche (60 s) — abdos / obliques
-9. Vacuum abdominal (60 s) — abdos / transverse
+9. Curl-up de McGill (60 s) — abdos / colonne neutre
 10. Pont fessier (60 s)
 11. Gainage ventral, planche (60 s) — abdos / anti-cambrure
 12. Bird dog (75 s)
@@ -22,7 +22,11 @@ le gainage des abdos profonds — adaptée sciatique.
 
 Les trois exercices d'abdos (8, 9 et 11) sont choisis pour ne pas solliciter
 les fléchisseurs de hanche ni comprimer les disques : gainage isométrique,
-stabilité latérale et transverse profond, plutôt que crunchs.
+stabilité latérale et curl-up à colonne neutre, plutôt que crunchs classiques.
+
+Le curl-up (9), la planche latérale (8) et le bird dog (12) forment le
+« Big 3 » de McGill, protocole de référence pour renforcer le tronc en
+lombalgie sans mettre la colonne en flexion chargée.
 
 ## Principe clé
 
@@ -35,7 +39,7 @@ bassin qui tombe.
 
 - `index.html` — l'application complète
 - `manifest.json` — métadonnées PWA
-- `sw.js` — service worker (cache v4, mise à jour automatique sur les anciennes installations)
+- `sw.js` — service worker (cache v5, mise à jour automatique sur les anciennes installations)
 - `icon-192.png`, `icon-512.png` — icônes pour l'écran d'accueil
 
 ## Installation sur Android
