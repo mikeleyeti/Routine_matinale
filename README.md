@@ -1,4 +1,4 @@
-# Routine Matinale — PWA (v5)
+# Routine Matinale — PWA (v6)
 
 Application web installable de routine matinale (12 min) ciblée sur la
 tension du psoas (côté droit prioritaire), le renforcement des fessiers et
@@ -39,7 +39,7 @@ bassin qui tombe.
 
 - `index.html` — l'application complète
 - `manifest.json` — métadonnées PWA
-- `sw.js` — service worker (cache v5, mise à jour automatique sur les anciennes installations)
+- `sw.js` — service worker (cache v6, mise à jour automatique sur les anciennes installations)
 - `icon-192.png`, `icon-512.png` — icônes pour l'écran d'accueil
 
 ## Installation sur Android
@@ -56,3 +56,9 @@ automatiquement.
 Liste des exercices en haut du `<script>` dans `index.html`, constante
 `EXERCISES`. Après modification, pense à incrémenter `CACHE` dans `sw.js`
 pour forcer la mise à jour des installations existantes.
+
+Le service worker va chercher la page sur le réseau en priorité (repli sur
+le cache au bout de 3 s ou hors ligne), et précharge les fichiers avec
+`cache: "reload"`. Ces deux points sont nécessaires : sans eux, une version
+périmée peut se retrouver figée dans le cache sans possibilité de
+récupération automatique.
