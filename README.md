@@ -1,10 +1,10 @@
-# Routine Matinale — PWA (v6)
+# Routine Matinale — PWA (v7)
 
-Application web installable de routine matinale (12 min) ciblée sur la
+Application web installable de routine matinale (13 min) ciblée sur la
 tension du psoas (côté droit prioritaire), le renforcement des fessiers et
 le gainage des abdos profonds — adaptée sciatique.
 
-## Programme (13 exercices, 12 minutes)
+## Programme (13 exercices, 13 minutes)
 
 1. Décompression lombaire (45 s) — ouverture en douceur
 2. Bascules du bassin (45 s) — apprendre la rétroversion
@@ -24,6 +24,11 @@ Les trois exercices d'abdos (8, 9 et 11) sont choisis pour ne pas solliciter
 les fléchisseurs de hanche ni comprimer les disques : gainage isométrique,
 stabilité latérale et curl-up à colonne neutre, plutôt que crunchs classiques.
 
+Une transition de 5 s sépare chaque exercice (12 transitions, soit 1 min sur
+les 13). Elle affiche déjà le nom et la consigne de l'exercice suivant, pour
+te laisser le temps de changer de position. Le bouton « suivant » la saute.
+Durée réglable via la constante `TRANSITION` dans `index.html`.
+
 Le curl-up (9), la planche latérale (8) et le bird dog (12) forment le
 « Big 3 » de McGill, protocole de référence pour renforcer le tronc en
 lombalgie sans mettre la colonne en flexion chargée.
@@ -39,7 +44,7 @@ bassin qui tombe.
 
 - `index.html` — l'application complète
 - `manifest.json` — métadonnées PWA
-- `sw.js` — service worker (cache v6, mise à jour automatique sur les anciennes installations)
+- `sw.js` — service worker (cache v7, mise à jour automatique sur les anciennes installations)
 - `icon-192.png`, `icon-512.png` — icônes pour l'écran d'accueil
 
 ## Installation sur Android

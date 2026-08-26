@@ -49,6 +49,8 @@
     font-size: 14px; border-bottom: 1px solid rgba(45,42,38,.06); }
   .exercise-list li:last-child { border-bottom: none; }
   .exercise-list li span:last-child { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .exercise-list .list-note { font-size: 12px; color: var(--muted); margin-top: 12px;
+    padding-top: 12px; border-top: 1px solid rgba(45,42,38,.06); }
 
   .workout { justify-content: space-between; gap: 16px; }
   .progress-wrap { display: flex; align-items: center; gap: 12px; }
@@ -57,7 +59,11 @@
   .progress-label { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; min-width: 36px; text-align: right; }
   .exercise-card { flex: 1; background: var(--surface); border-radius: 24px; padding: 24px 22px;
     display: flex; flex-direction: column; justify-content: center; text-align: center;
-    box-shadow: var(--shadow); gap: 14px; }
+    box-shadow: var(--shadow); gap: 14px; transition: background .3s ease; }
+  .exercise-card.transition { background: var(--accent-soft); }
+  .exercise-card.transition .exercise-num { color: #8a5a38; }
+  .exercise-card.transition .exercise-instruction { color: #7a5540; }
+  .exercise-card.transition .bg-ring { stroke: rgba(201,123,74,.25); }
   .exercise-num { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; }
   .exercise-name { font-size: 24px; font-weight: 600; line-height: 1.2; letter-spacing: -.01em; }
   .exercise-instruction { color: var(--muted); font-size: 14px; line-height: 1.5; max-width: 380px; margin: 0 auto; }
@@ -109,7 +115,7 @@
           <line x1="20" y1="76" x2="27" y2="69"/><line x1="69" y1="27" x2="76" y2="20"/>
         </g>
       </svg>
-      <div class="pill">12 min &middot; psoas, fessiers &amp; abdos profonds</div>
+      <div class="pill">13 min &middot; psoas, fessiers &amp; abdos profonds</div>
     </div>
     <div>
       <h1>Routine matinale</h1>
@@ -118,6 +124,7 @@
     <div class="exercise-list">
       <h3>Programme</h3>
       <ul id="program-list"></ul>
+      <p class="list-note">+ 5 s de transition entre chaque exercice, pour te mettre en place</p>
     </div>
     <div class="tip">
       <strong>Clé de la routine :</strong> sur les étirements du psoas et le pont fessier, garde le bassin en rétroversion (ventre rentré, bas du dos plaqué). C'est ce qui fait toute la différence — sans ça, tu cambres et l'étirement ne sert à rien.
@@ -156,7 +163,7 @@
       <p>Pense à te lever toutes les 30–45 min au bureau et à marcher 20–30 min dans la journée — c'est le meilleur régulateur du psoas.</p>
     </div>
     <div class="stats">
-      <div class="stat-card"><div class="stat-value">12</div><div class="stat-label">Minutes</div></div>
+      <div class="stat-card"><div class="stat-value">13</div><div class="stat-label">Minutes</div></div>
       <div class="stat-card"><div class="stat-value">13</div><div class="stat-label">Exercices</div></div>
     </div>
     <button class="start-btn" id="restart-btn">Recommencer</button>
@@ -232,12 +239,17 @@
   }
 ];
 
+// Pause entre deux exercices : le temps de changer de position et de lire la
+// consigne suivante, affichée pendant le décompte.
+const TRANSITION = 5;
+
 const $ = id => document.getElementById(id);
 const screens = { welcome: $("welcome"), workout: $("workout"), done: $("done") };
 const ring = $("ring");
 const RING_CIRC = 2 * Math.PI * 92;
 
-let idx = 0, remaining = 0, intervalId = null, paused = false, wakeLock = null, audioCtx = null;
+let idx = 0, remaining = 0, intervalId = null, paused = false, inTransition = false,
+    wakeLock = null, audioCtx = null;
 
 function beep(freq = 440, duration = 0.15) {
   try {
@@ -273,17 +285,26 @@ function showScreen(name) {
   screens[name].classList.add("active");
 }
 
-function loadExercise(i) {
+// Pendant la transition on affiche déjà l'exercice à venir : son nom, sa
+// consigne et sa position. Seuls le libellé d'étape, la durée et la teinte
+// de la carte changent.
+function showStep(i, transition) {
   const ex = EXERCISES[i];
-  $("ex-num").textContent = `Étape ${i + 1} sur ${EXERCISES.length}`;
+  inTransition = transition;
+  $("ex-num").textContent = transition
+    ? "Transition — prépare-toi"
+    : `Étape ${i + 1} sur ${EXERCISES.length}`;
   $("ex-name").textContent = ex.name;
   $("ex-instruction").textContent = ex.instruction;
   $("progress-label").textContent = `${i + 1}/${EXERCISES.length}`;
   $("progress-fill").style.width = `${(i / EXERCISES.length) * 100}%`;
-  remaining = ex.duration;
+  document.querySelector(".exercise-card").classList.toggle("transition", transition);
+  remaining = transition ? TRANSITION : ex.duration;
   updateTimerDisplay();
   updateRing(1);
 }
+const loadExercise = i => showStep(i, false);
+const loadTransition = i => showStep(i, true);
 function updateTimerDisplay() {
   const m = Math.floor(remaining / 60), s = remaining % 60;
   $("timer").textContent = `${m}:${String(s).padStart(2, "0")}`;
@@ -295,23 +316,36 @@ function updateRing(progress) {
 
 function startTimer() {
   clearInterval(intervalId);
-  const total = EXERCISES[idx].duration;
+  const total = remaining;
   intervalId = setInterval(() => {
     if (paused) return;
     remaining--;
     updateTimerDisplay();
     updateRing(remaining / total);
     if (remaining <= 3 && remaining > 0) beep(660, 0.08);
-    if (remaining <= 0) { clearInterval(intervalId); beep(880, 0.25); next(); }
+    if (remaining <= 0) { clearInterval(intervalId); beep(880, 0.25); advance(); }
   }, 1000);
 }
 
-function next() {
-  if (idx < EXERCISES.length - 1) { idx++; loadExercise(idx); startTimer(); }
-  else finish();
+// Enchaînement automatique en fin de chrono : exercice → transition → exercice.
+function advance() {
+  if (inTransition) { idx++; loadExercise(idx); }
+  else if (idx < EXERCISES.length - 1) { loadTransition(idx + 1); }
+  else { finish(); return; }
+  startTimer();
 }
+
+// Le bouton « suivant » saute la transition : si on l'a pressé, c'est qu'on
+// est déjà prêt.
+function next() {
+  if (idx >= EXERCISES.length - 1 && !inTransition) { finish(); return; }
+  idx++;
+  loadExercise(idx); startTimer();
+}
+
+// Pendant une transition, « précédent » reprend l'exercice qu'on vient de finir.
 function prev() {
-  if (idx > 0) idx--;
+  if (!inTransition && idx > 0) idx--;
   loadExercise(idx); startTimer();
 }
 function togglePause() {
@@ -331,7 +365,7 @@ function finish() {
 }
 
 function start() {
-  idx = 0; paused = false;
+  idx = 0; paused = false; inTransition = false;
   $("pause-icon").innerHTML = '<path d="M6 4h4v16H6zM14 4h4v16h-4z"/>';
   loadExercise(0); showScreen("workout");
   requestWakeLock(); beep(659, 0.15); startTimer();
