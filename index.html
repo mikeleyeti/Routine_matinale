@@ -115,19 +115,19 @@
           <line x1="20" y1="76" x2="27" y2="69"/><line x1="69" y1="27" x2="76" y2="20"/>
         </g>
       </svg>
-      <div class="pill">13 min &middot; psoas, fessiers &amp; abdos profonds</div>
+      <div class="pill">14 min &middot; psoas, abdos profonds &amp; stabilité</div>
     </div>
     <div>
       <h1>Routine matinale</h1>
-      <p class="subtitle">13 exercices pour relâcher le psoas (côté droit prioritaire), activer les fessiers et gainer les abdos profonds — sans sollicitation des fléchisseurs de hanche.</p>
+      <p class="subtitle">13 exercices pour relâcher le psoas (côté droit prioritaire), gainer les abdos profonds et stabiliser le bassin — sans sollicitation des fléchisseurs de hanche.</p>
     </div>
     <div class="exercise-list">
       <h3>Programme</h3>
       <ul id="program-list"></ul>
-      <p class="list-note">+ 5 s de transition entre chaque exercice, pour te mettre en place</p>
+      <p class="list-note">+ 10 s de transition entre chaque exercice, pour te mettre en place</p>
     </div>
     <div class="tip">
-      <strong>Clé de la routine :</strong> sur les étirements du psoas et le pont fessier, garde le bassin en rétroversion (ventre rentré, bas du dos plaqué). C'est ce qui fait toute la différence — sans ça, tu cambres et l'étirement ne sert à rien.
+      <strong>Clé de la routine :</strong> sur les étirements du psoas comme sur les gainages, garde le bassin en rétroversion (ventre rentré, bas du dos plaqué). C'est ce qui fait toute la différence — sans ça, tu cambres, et l'étirement comme le gainage ne servent à rien.
     </div>
     <button class="start-btn" id="start-btn">Commencer</button>
   </section>
@@ -163,7 +163,7 @@
       <p>Pense à te lever toutes les 30–45 min au bureau et à marcher 20–30 min dans la journée — c'est le meilleur régulateur du psoas.</p>
     </div>
     <div class="stats">
-      <div class="stat-card"><div class="stat-value">13</div><div class="stat-label">Minutes</div></div>
+      <div class="stat-card"><div class="stat-value">14</div><div class="stat-label">Minutes</div></div>
       <div class="stat-card"><div class="stat-value">13</div><div class="stat-label">Exercices</div></div>
     </div>
     <button class="start-btn" id="restart-btn">Recommencer</button>
@@ -218,9 +218,9 @@
     instruction: "Sur le dos, mains glissées SOUS les lombaires (paumes au sol), une jambe pliée, l'autre tendue. Décolle à peine tête et épaules — 2 cm suffisent — sans écraser tes mains ni enrouler le bas du dos. Tiens 8-10 s, relâche, change de jambe pliée à mi-parcours. Renforce les abdos en gardant la colonne neutre."
   },
   {
-    name: "Pont fessier",
+    name: "Touches d'épaules en planche",
     duration: 60,
-    instruction: "Sur le dos, genoux pliés. Monte le bassin en SERRANT FORT les fessiers, sans cambrer, tient 2 s en haut, descends lentement. Vise 12-15 répétitions. Des fessiers forts = protection majeure du dos et de la sciatique."
+    instruction: "En planche sur les mains, pieds bien écartés. Décolle une main pour toucher l'épaule opposée, repose, alterne lentement. Le bassin ne doit PAS pivoter — c'est tout l'exercice. Genoux au sol si le bassin bouge. Travaille l'anti-rotation, la seule dimension que le reste de la séance ne couvre pas."
   },
   {
     name: "Gainage ventral (planche)",
@@ -241,7 +241,7 @@
 
 // Pause entre deux exercices : le temps de changer de position et de lire la
 // consigne suivante, affichée pendant le décompte.
-const TRANSITION = 5;
+const TRANSITION = 10;
 
 const $ = id => document.getElementById(id);
 const screens = { welcome: $("welcome"), workout: $("workout"), done: $("done") };

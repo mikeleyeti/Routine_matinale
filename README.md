@@ -1,10 +1,10 @@
-# Routine Matinale — PWA (v7)
+# Routine Matinale — PWA (v8)
 
-Application web installable de routine matinale (13 min) ciblée sur la
-tension du psoas (côté droit prioritaire), le renforcement des fessiers et
-le gainage des abdos profonds — adaptée sciatique.
+Application web installable de routine matinale (14 min) ciblée sur la
+tension du psoas (côté droit prioritaire), le gainage des abdos profonds et
+la stabilité du bassin — adaptée sciatique.
 
-## Programme (13 exercices, 13 minutes)
+## Programme (13 exercices, 14 minutes)
 
 1. Décompression lombaire (45 s) — ouverture en douceur
 2. Bascules du bassin (45 s) — apprendre la rétroversion
@@ -15,17 +15,22 @@ le gainage des abdos profonds — adaptée sciatique.
 7. Étirement ischio-jambiers (60 s)
 8. Planche latérale droite puis gauche (60 s) — abdos / obliques
 9. Curl-up de McGill (60 s) — abdos / colonne neutre
-10. Pont fessier (60 s)
+10. Touches d'épaules en planche (60 s) — abdos / anti-rotation
 11. Gainage ventral, planche (60 s) — abdos / anti-cambrure
 12. Bird dog (75 s)
 13. Posture de l'enfant (45 s) — retour au calme
 
-Les trois exercices d'abdos (8, 9 et 11) sont choisis pour ne pas solliciter
-les fléchisseurs de hanche ni comprimer les disques : gainage isométrique,
-stabilité latérale et curl-up à colonne neutre, plutôt que crunchs classiques.
+Les quatre exercices d'abdos (8 à 11) sont choisis pour ne pas solliciter les
+fléchisseurs de hanche ni comprimer les disques : stabilité latérale,
+curl-up à colonne neutre, anti-rotation et gainage isométrique, plutôt que
+crunchs classiques.
 
-Une transition de 5 s sépare chaque exercice (12 transitions, soit 1 min sur
-les 13). Elle affiche déjà le nom et la consigne de l'exercice suivant, pour
+Le pont fessier a été retiré (douleur au psoas signalée dessus). La séance
+n'a donc plus de renforcement des fessiers — à réintroduire si la douleur se
+calme, des fessiers faibles faisant compenser le psoas.
+
+Une transition de 10 s sépare chaque exercice (12 transitions, soit 2 min sur
+les 14). Elle affiche déjà le nom et la consigne de l'exercice suivant, pour
 te laisser le temps de changer de position. Le bouton « suivant » la saute.
 Durée réglable via la constante `TRANSITION` dans `index.html`.
 
@@ -35,16 +40,15 @@ lombalgie sans mettre la colonne en flexion chargée.
 
 ## Principe clé
 
-Sur les étirements du psoas et le pont fessier : **bassin en rétroversion**
-(ventre rentré, bas du dos plaqué). Sans ça, on cambre et l'étirement ne
-travaille rien. Même consigne sur les gainages : aucune cambrure, aucun
-bassin qui tombe.
+Sur les étirements du psoas comme sur les gainages : **bassin en
+rétroversion** (ventre rentré, bas du dos plaqué). Sans ça, on cambre, et
+l'étirement comme le gainage ne travaillent rien.
 
 ## Contenu du dossier
 
 - `index.html` — l'application complète
 - `manifest.json` — métadonnées PWA
-- `sw.js` — service worker (cache v7, mise à jour automatique sur les anciennes installations)
+- `sw.js` — service worker (cache v8, mise à jour automatique sur les anciennes installations)
 - `icon-192.png`, `icon-512.png` — icônes pour l'écran d'accueil
 
 ## Installation sur Android
