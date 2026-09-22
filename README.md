@@ -1,4 +1,4 @@
-# Routine Matinale — PWA (v8)
+# Routine Matinale — PWA (v9)
 
 Application web installable de routine matinale (14 min) ciblée sur la
 tension du psoas (côté droit prioritaire), le gainage des abdos profonds et
@@ -48,7 +48,7 @@ l'étirement comme le gainage ne travaillent rien.
 
 - `index.html` — l'application complète
 - `manifest.json` — métadonnées PWA
-- `sw.js` — service worker (cache v8, mise à jour automatique sur les anciennes installations)
+- `sw.js` — service worker (cache v9, mise à jour automatique sur les anciennes installations)
 - `icon-192.png`, `icon-512.png` — icônes pour l'écran d'accueil
 
 ## Installation sur Android
